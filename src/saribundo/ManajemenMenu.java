@@ -34,15 +34,15 @@ public class ManajemenMenu {
         System.out.println("--------- RESTO SARI BUNDO ---------");
         System.out.println("------------------------------------");
         System.out.println("\n----------- MENU MAKANAN -----------\n");
-        for (Menu item : daftarMenu) {
-            if (item.getKategori().equals("Makanan")) {
-                System.out.printf("%s\t\tRp%,.0f%n", item.getNama(), item.getHarga());
+        for (Menu menu : daftarMenu) {
+            if (menu.getKategori().equalsIgnoreCase("Makanan")) {
+                System.out.println("- " + menu);
             }
         }
         System.out.println("\n----------- MENU MINUMAN -----------\n");
-        for (Menu item : daftarMenu) {
-            if (item.getKategori().equals("Minuman")) {
-                System.out.printf("%s\t\tRp%,.0f%n", item.getNama(), item.getHarga());
+        for (Menu menu : daftarMenu) {
+            if (menu.getKategori().equalsIgnoreCase("Minuman")) {
+                System.out.println("- " + menu);
             }
         }
     }
@@ -90,36 +90,32 @@ public class ManajemenMenu {
         double totalBiaya = 0;
         System.out.println("\n------------------------------------");
         System.out.println("----------- STRUK BELANJA ----------");
-        System.out.println("--------- RESTO SARI BUNDO ---------");
+        System.out.println("--------- WARUNK KAKI TIGA ---------");
         System.out.println("------------------------------------\n");
         for (int i = 0; i < pesanan.size(); i++) {
             Menu menu = pesanan.get(i);
             int jumlah = jumlahPesanan.get(i);
             double hargaItem = menu.getHarga() * jumlah;
-            System.out.println(menu.getNama());
-            System.out.printf("%d x %,.0f\t\tRp%,.0f%n", jumlah, menu.getHarga(), hargaItem);
+            System.out.println(menu.getNama() + " x" + jumlah + " = Rp " + hargaItem);
+            System.out.printf("%n%d x %,.0f\t\tRp%,.0f%n", jumlah, menu.getHarga(), hargaItem);
             totalBiaya += hargaItem;
         }
 
-        // tambahan pajak dan biaya pelayanan
+        // Tambahkan pajak dan biaya pelayanan
         double pajak = totalBiaya * PAJAK;
         double totalAkhir = totalBiaya + pajak + BIAYA_PELAYANAN;
 
-        // diskon 10% kalo belanja diatas 100 ribu
-        double hargaDiskon = totalBiaya * 0.1;
+        // Terapkan diskon jika berlaku
         if (totalBiaya > 100000) {
-            totalAkhir = totalAkhir - hargaDiskon;
+            System.out.println("Diskon 10% diterapkan!");
+            totalAkhir *= 0.90;
         }
 
         System.out.println("\n------------------------------------\n");
-        System.out.printf("\nSubtotal\t\tRp%,.0f", totalBiaya);
-        // diskon 10% kalo belanja diatas 100 ribu
-        if (totalBiaya > 100000) {
-            System.out.printf("\nDiskon 10%%\t\t-%,.0f", hargaDiskon);
-        }
-        System.out.printf("\nPajak 10%%\t\tRp%,.0f", pajak);
-        System.out.printf("\nBiaya Pelayanan\t\tRp%,.0f", BIAYA_PELAYANAN);
-        System.out.printf("\nTotal\t\t\tRp%,.0f%n", totalAkhir);
+        System.out.println("\nSubtotal: Rp " + totalBiaya);
+        System.out.println("Pajak 10%: Rp " + pajak);
+        System.out.println("Biaya Pelayanan: Rp " + BIAYA_PELAYANAN);
+        System.out.println("Total Akhir: Rp " + totalAkhir);
         System.out.println("\n------------------------------------");
         System.out.println("--------- TERIMAKASIH SUDAH --------");
         System.out.println("------------ BERBELANJA ------------");
