@@ -103,6 +103,24 @@ public class ManajemenMenu {
             totalBiaya += hargaItem;
         }
 
+        // minuman gratis kalo total belanja diatas 50.000
+        if (totalBiaya > 50000) {
+            Menu minumanGratis = null;
+            // Cari pesanan minuman terakhir
+            for (int i = pesanan.size() - 1; i >= 0; i--) {
+                if (pesanan.get(i).getKategori().equalsIgnoreCase("Minuman")) {
+                    minumanGratis = pesanan.get(i);
+                    break;
+                }
+            }
+            // cetak promo minuman gratis
+            if (minumanGratis != null) {
+                System.out.println("\nMinuman Gratis:");
+                System.out.printf("1 x %s\t\tRp%,.0f", minumanGratis.getNama(), minumanGratis.getHarga());
+                System.out.printf("\n\t\t\t-%,.0f%n", minumanGratis.getHarga());
+            }
+        }
+
         // tambahan pajak dan biaya pelayanan
         double totalPajak = totalBiaya * pajak;
         double totalAkhir = totalBiaya + totalPajak + biayaPelayanan;
@@ -114,7 +132,7 @@ public class ManajemenMenu {
         }
 
         System.out.println("\n------------------------------------\n");
-        System.out.printf("\nSubtotal\t\tRp%,.0f", totalBiaya);
+        System.out.printf("Subtotal\t\tRp%,.0f", totalBiaya);
         // diskon 10% kalo belanja diatas 100 ribu
         if (totalBiaya > 100000) {
             System.out.printf("\nDiskon 10%%\t\t-%,.0f", totalDiskon);
