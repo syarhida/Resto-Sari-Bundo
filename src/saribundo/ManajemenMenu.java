@@ -7,10 +7,8 @@ public class ManajemenMenu {
     private ArrayList<Menu> daftarMenu = new ArrayList<>();
     private ArrayList<Menu> pesanan = new ArrayList<>();
     private ArrayList<Integer> jumlahPesanan = new ArrayList<>();
-    private static final double PAJAK = 0.10;
-    private static final double BIAYA_PELAYANAN = 20000;
 
-    // Konstruktor: Tambahkan menu awal
+    // konstruktor: tambahkan menu awal
     public ManajemenMenu() {
         tambahMenuAwal();
     }
@@ -28,26 +26,30 @@ public class ManajemenMenu {
         daftarMenu.add(new Menu("Jus Mangga", 15000, "Minuman"));
     }
 
-    // Tampilkan daftar menu
+    // ni buat pajak sama biaya pelayanan
+    static double pajak = 0.1;
+    static double biayaPelayanan = 20000;
+
+    // menampilkan daftar menu
     public void tampilkanMenu() {
         System.out.println("\n------------------------------------");
         System.out.println("--------- RESTO SARI BUNDO ---------");
         System.out.println("------------------------------------");
         System.out.println("\n----------- MENU MAKANAN -----------\n");
-        for (Menu menu : daftarMenu) {
-            if (menu.getKategori().equalsIgnoreCase("Makanan")) {
-                System.out.println("- " + menu);
+        for (Menu item : daftarMenu) {
+            if (item.getKategori().equals("Makanan")) {
+                System.out.printf("%s\t\tRp%,.0f%n", item.getNama(), item.getHarga());
             }
         }
         System.out.println("\n----------- MENU MINUMAN -----------\n");
-        for (Menu menu : daftarMenu) {
-            if (menu.getKategori().equalsIgnoreCase("Minuman")) {
-                System.out.println("- " + menu);
+        for (Menu item : daftarMenu) {
+            if (item.getKategori().equals("Minuman")) {
+                System.out.printf("%s\t\tRp%,.0f%n", item.getNama(), item.getHarga());
             }
         }
     }
 
-    // Cari menu berdasarkan nama
+    // cari menu berdasarkan nama
     public Menu cariMenu(String namaMenu) {
         for (Menu menu : daftarMenu) {
             if (menu.getNama().equalsIgnoreCase(namaMenu)) {
@@ -57,7 +59,7 @@ public class ManajemenMenu {
         return null;
     }
 
-    // Fungsi untuk melakukan pemesanan
+    // fungsi pemesanan
     public void lakukanPemesanan() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -85,44 +87,48 @@ public class ManajemenMenu {
         }
     }
 
-    // Cetak struk pemesanan
+    // print struk pemesanan
     public void cetakStruk() {
         double totalBiaya = 0;
         System.out.println("\n------------------------------------");
         System.out.println("----------- STRUK BELANJA ----------");
-        System.out.println("--------- WARUNK KAKI TIGA ---------");
+        System.out.println("--------- RESTO SARI BUNDO ---------");
         System.out.println("------------------------------------\n");
         for (int i = 0; i < pesanan.size(); i++) {
             Menu menu = pesanan.get(i);
             int jumlah = jumlahPesanan.get(i);
             double hargaItem = menu.getHarga() * jumlah;
-            System.out.println(menu.getNama() + " x" + jumlah + " = Rp " + hargaItem);
-            System.out.printf("%n%d x %,.0f\t\tRp%,.0f%n", jumlah, menu.getHarga(), hargaItem);
+            System.out.println(menu.getNama());
+            System.out.printf("%d x %,.0f\t\tRp%,.0f%n", jumlah, menu.getHarga(), hargaItem);
             totalBiaya += hargaItem;
         }
 
-        // Tambahkan pajak dan biaya pelayanan
-        double pajak = totalBiaya * PAJAK;
-        double totalAkhir = totalBiaya + pajak + BIAYA_PELAYANAN;
+        // tambahan pajak dan biaya pelayanan
+        double totalPajak = totalBiaya * pajak;
+        double totalAkhir = totalBiaya + totalPajak + biayaPelayanan;
 
-        // Terapkan diskon jika berlaku
+        // diskon 10% kalo belanja diatas 100 ribu
+        double totalDiskon = totalBiaya * 0.1;
         if (totalBiaya > 100000) {
-            System.out.println("Diskon 10% diterapkan!");
-            totalAkhir *= 0.90;
+            totalAkhir = totalAkhir - totalDiskon;
         }
 
         System.out.println("\n------------------------------------\n");
-        System.out.println("\nSubtotal: Rp " + totalBiaya);
-        System.out.println("Pajak 10%: Rp " + pajak);
-        System.out.println("Biaya Pelayanan: Rp " + BIAYA_PELAYANAN);
-        System.out.println("Total Akhir: Rp " + totalAkhir);
+        System.out.printf("\nSubtotal\t\tRp%,.0f", totalBiaya);
+        // diskon 10% kalo belanja diatas 100 ribu
+        if (totalBiaya > 100000) {
+            System.out.printf("\nDiskon 10%%\t\t-%,.0f", totalDiskon);
+        }
+        System.out.printf("\nPajak 10%%\t\tRp%,.0f", totalPajak);
+        System.out.printf("\nBiaya Pelayanan\t\tRp%,.0f", biayaPelayanan);
+        System.out.printf("\nTotal\t\t\tRp%,.0f%n", totalAkhir);
         System.out.println("\n------------------------------------");
         System.out.println("--------- TERIMAKASIH SUDAH --------");
         System.out.println("------------ BERBELANJA ------------");
         System.out.println("------------------------------------\n");
     }
 
-    // Fungsi untuk kelola menu
+    // ni buat kelola menu
     public void kelolaMenu() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
