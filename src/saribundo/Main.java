@@ -30,7 +30,7 @@ public class Main {
                     System.out.println("Terima kasih telah menggunakan aplikasi.");
                     return;
                 default:
-                    System.out.println("Pilihan tidak valid. Coba lagi.");
+                    System.out.println("Pilihan tidak valid. Silahkan coba lagi.");
             }
         }
     }
