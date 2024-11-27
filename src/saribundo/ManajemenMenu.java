@@ -144,6 +144,10 @@ public class ManajemenMenu {
         System.out.println("--------- TERIMAKASIH SUDAH --------");
         System.out.println("------------ BERBELANJA ------------");
         System.out.println("------------------------------------\n");
+
+        // reset pesanan setelah cetak struk
+        pesanan.clear();
+        jumlahPesanan.clear();
     }
 
     // ni buat kelola menu
